@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.customInput{
+   @apply outline-none p-2 rounded-t-md border-b-2 border-[#ddd] focus-within:border-lightGray focus-within:bg-[#eee]
+}

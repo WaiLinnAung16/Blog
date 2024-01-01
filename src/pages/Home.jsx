@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../utils/Card";
-
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Home = () => {
+  const [blogs, setBlogs] = useState([]);
+
+  const getAllBlogs = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_API}/blog`)
+      .then((res) => setBlogs(res?.data?.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllBlogs();
+  }, []);
+
   return (
-    <div>
-      <Card
-        time={"3 hr"}
-        title={"Title Go here"}
-        desc={
-          "In the heart of a bustling metropolis, where city lights paint the evening sky, a quaint coffee shop stands."
-        }
-      />
+    <div className="grid grid-cols-12 gap-5">
+      {blogs?.map((blog) => {
+        return (
+          <Card
+            key={blog._id}
+            name={blog.author_name}
+            title={blog.title}
+            image={blog.blogImg}
+            desc={blog.content}
+            time={blog.date}
+            hashTags={blog.hashTag}
+            like={blog.like}
+            comment={blog.comment}
+          />
+        );
+      })}
+      <ToastContainer />
     </div>
   );
 };

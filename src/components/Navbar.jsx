@@ -30,8 +30,8 @@ const Navbar = () => {
               {nav.icon}
             </Link>
           ))}
-        {/* Avatar */}
-        <Avatar width={10} height={10}/>
+          {/* Avatar */}
+          <Avatar />
         </div>
       </div>
     </nav>

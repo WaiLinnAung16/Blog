@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const HashTag = ({text}) => {
-  return (
-    <div className='self-start flex items-center justify-center px-3 py-1 bg-primary text-white rounded-md'>
-        <span>{text}</span>
-    </div>
-  )
-}
+const HashTag = ({ hashTags }) => {
+  return <div className="flex items-center gap-x-3">
+    {hashTags
+    ?.split(",")
+    .map((hashTag) => (
+      <div key={hashTag} className="self-start flex items-center justify-center px-3 py-1 bg-primary text-white rounded-md">
+        {hashTag}
+      </div>
+    ))}
+  </div>
+};
 
-export default HashTag
+export default HashTag;
