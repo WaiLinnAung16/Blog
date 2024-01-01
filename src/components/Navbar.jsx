@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
+import { BiLogIn } from "react-icons/bi";
 import Avatar from "../utils/Avatar";
 
 const NavMenus = [
@@ -23,16 +24,19 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* LOGO HERE */}
         <h1 className="font-bold text-3xl">LOGO</h1>
-        {/* Navigation Menu */}
+        
+        {/* Navigation Menu When Login ---------------> */}
         <div className="flex items-center space-x-5">
-          {NavMenus.map((nav) => (
+          <Link to={'/login'} className="flex items-center gap-x-2"><BiLogIn className="text-xl"/> Login</Link>
+          <Link to={'/register'}>Register</Link>
+          {/* {NavMenus.map((nav) => (
             <Link to={nav.link} key={nav.id} className="text-2xl">
               {nav.icon}
             </Link>
           ))}
-          {/* Avatar */}
-          <Avatar />
-        </div>
+          Avatar
+          <Avatar /> */}
+        </div> 
       </div>
     </nav>
   );

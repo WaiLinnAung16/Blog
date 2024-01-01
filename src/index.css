@@ -6,3 +6,7 @@
 .customInput{
    @apply outline-none p-2 rounded-t-md border-b-2 border-[#ddd] focus-within:border-lightGray focus-within:bg-[#eee]
 }
+
+.primaryBtn{
+   @apply bg-primary text-secondary border rounded active:bg-transparent active:border-primary active:text-black
+}
