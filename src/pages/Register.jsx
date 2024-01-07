@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { registerRoute } from "../Global/API/apiRoute";
+import registerValidate from "../utils/Validation/registerValidate";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+
 const Register = () => {
   const initialState = {
     name: "",
@@ -9,12 +13,15 @@ const Register = () => {
     confirmPassword: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [errors, setErrors] = useState();
 
+  // Save values change in every input
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiData = {
@@ -25,13 +32,21 @@ const Register = () => {
         con_password: formData.confirmPassword,
       },
     };
-    await axios
-      .post(registerRoute, apiData)
-      .then((res) => console.log(res?.data?.data))
-      .catch((err) => console.log(err));
+
+    // Register Validation
+    const { validationErrors, valid } = registerValidate(formData);
+    setErrors(validationErrors);
+
+    // If valid send data
+    if (valid) {
+      await axios
+        .post(registerRoute, apiData)
+        .then((res) => console.log(res?.data?.data))
+        .catch((err) => toast.error(err?.response?.data?.message));
+    }
   };
   return (
-    <div className="flex items-center justify-center h-[70vh]">
+    <div className="flex items-center justify-center h-[80vh]">
       <div className="min-w-lg w-[500px] border border-lightWhite rounded p-5">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -51,6 +66,7 @@ const Register = () => {
               className="customInput"
               onChange={handleChangeInput}
             />
+            <span className="text-red-500">{errors?.name}</span>
           </div>
           {/* Email */}
           <div className="flex flex-col gap-y-2">
@@ -63,6 +79,7 @@ const Register = () => {
               className="customInput"
               onChange={handleChangeInput}
             />
+            <span className="text-red-500">{errors?.email}</span>
           </div>
           {/* Password */}
           <div className="flex flex-col gap-y-2">
@@ -75,6 +92,7 @@ const Register = () => {
               className="customInput"
               onChange={handleChangeInput}
             />
+            <span className="text-red-500">{errors?.password}</span>
           </div>
           {/* Confirm Password */}
           <div className="flex flex-col gap-y-2">
@@ -87,6 +105,7 @@ const Register = () => {
               className="customInput"
               onChange={handleChangeInput}
             />
+            <span className="text-red-500">{errors?.confirmPassword}</span>
           </div>
           <div className="flex flex-col gap-y-5 md:gap-0 md:flex-row justify-between items-center">
             {/* submit btn */}
@@ -96,9 +115,9 @@ const Register = () => {
             {/* to register */}
             <p>
               Already have an account?{" "}
-              <span className="cursor-pointer font-light underline text-darkGray hover:font-semibold">
+              <Link to={'/login'} className="cursor-pointer font-light underline text-darkGray hover:font-semibold">
                 Login
-              </span>
+              </Link>
             </p>
           </div>
         </form>

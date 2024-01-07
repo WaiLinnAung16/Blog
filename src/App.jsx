@@ -1,6 +1,8 @@
 import React from "react";
 import Path from "./routes/Path";
 import Navbar from "./components/Navbar";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -9,6 +11,7 @@ const App = () => {
       <div className="px-2 py-5">
         <Path />
       </div>
+      <ToastContainer />
     </div>
   );
 };
