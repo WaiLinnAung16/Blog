@@ -24,17 +24,29 @@ const Card = ({
   like,
   comment,
   image,
-  blog
+  blog,
+  blogOwner,
 }) => {
-  const userInfo = userStore(store=>store.userInfo);
-  const addBlog = userStore(store=>store.addBlog);
+  const userInfo = userStore((store) => store.userInfo);
+  const addBlog = userStore((store) => store.addBlog);
   const nav = useNavigate();
   const likeCount = like ? like.length : 0;
   const commentCount = comment ? comment.length : 0;
   const token = Cookies.get("token");
 
+  // Detail
+  const handleDetail = () => {
+    if (token) {
+      addBlog(blog);
+      nav(`/detail/${blog.title}`);
+    } else {
+      toast.error("You need to login!", { autoClose: 2000 });
+      setTimeout(() => nav("/login"), 3000);
+    }
+  };
+
   // if login userId and likeUserId same like btn will change
-  const match = like.find(el=>el.id === userInfo._id);
+  const match = like?.find((el) => el?.id === userInfo?._id);
   // Like function
   const handleLike = async () => {
     if (token) {
@@ -61,7 +73,10 @@ const Card = ({
   };
 
   return (
-    <div onClick={()=>{addBlog(blog),nav('/detail')}} className="col-span-12 md:col-span-6 lg:col-span-3 border border-lightWhite rounded-md p-5 shadow">
+    <div
+      onClick={handleDetail}
+      className="col-span-12 md:col-span-6 lg:col-span-3 border border-lightWhite rounded-md p-5 shadow"
+    >
       <div className="flex flex-col space-y-5">
         {/* Content */}
         <div className="flex flex-col space-y-2 text-primary">
@@ -80,13 +95,23 @@ const Card = ({
         </div>
         {/* Upload User, Like, Cmt */}
         <div className="flex justify-between items-center">
-          <div>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              nav(`profile/${blogOwner}`);
+            }}
+          >
             <Avatar name={name} />
           </div>
           <div className="flex gap-x-5">
             <div
-              onClick={(e) => {e.stopPropagation();handleLike()}}
-              className={`flex items-center space-x-2 ${match ? 'text-primary font-bold' : 'text-lightGray'}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleLike();
+              }}
+              className={`flex items-center space-x-2 ${
+                match ? "text-primary font-bold" : "text-lightGray"
+              }`}
             >
               <SlLike className="text-xl" />
               <span>{likeCount}</span>

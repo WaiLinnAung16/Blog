@@ -30,6 +30,7 @@ const Home = () => {
             blog={blog}
             blogId={blog._id}
             name={blog.author_name}
+            blogOwner={blog.blogOwner}
             title={blog.title}
             image={blog.blogImg}
             desc={blog.content}

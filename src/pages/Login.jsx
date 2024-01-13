@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "zustand";
 import { userStore } from "../Global/API/store";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const addUser = userStore(store=>store.addUser);
