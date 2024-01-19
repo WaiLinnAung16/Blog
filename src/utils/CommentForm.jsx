@@ -62,7 +62,21 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
 
   return (
     <>
-      <div className="flex rounded shadow overflow-hidden fixed bottom-0 left-0 w-full">
+ 
+      <div className="flex flex-col gap-y-3 p-2 h-[350px] overflow-y-scroll rounded-md shadow">
+        {comments?.map((cmt, i) => {
+          return (
+            <div key={i} className="flex flex-col gap-2 border-b pb-3">
+              <div className="flex items-center gap-2">
+                <Avatar name={cmtUserName(cmt)}/>
+                <span>{cmtUserName(cmt)}</span>
+              </div>
+              <span className="pl-5">{cmt.userComment}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex rounded shadow overflow-hidden">
         <input
           type="text"
           placeholder="Write a comment..."
@@ -78,19 +92,6 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
         >
           <IoIosSend className="text-xl" />
         </button>
-      </div>
-      <div className="flex flex-col gap-y-3 mb-10 p-2 h-[350px] overflow-y-scroll rounded-md shadow">
-        {comments?.map((cmt, i) => {
-          return (
-            <div key={i} className="flex flex-col gap-2 border-b pb-3">
-              <div className="flex items-center gap-2">
-                <Avatar name={cmtUserName(cmt)}/>
-                <span>{cmtUserName(cmt)}</span>
-              </div>
-              <span className="pl-5">{cmt.userComment}</span>
-            </div>
-          );
-        })}
       </div>
     </>
   );

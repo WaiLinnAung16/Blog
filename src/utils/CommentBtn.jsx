@@ -1,10 +1,9 @@
 import React from "react";
-import { TfiComment } from "react-icons/tfi";
-
+import { BiComment } from "react-icons/bi";
 const CommentBtn = ({commentCount}) => {
   return (
     <div className="flex items-center space-x-2 text-lightGray ">
-      <TfiComment className="text-xl"/>
+      <BiComment className="text-2xl"/>
       <span>{commentCount}</span>
     </div>
   );
