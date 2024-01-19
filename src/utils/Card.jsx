@@ -32,6 +32,7 @@ const Card = ({ refresh, setRefresh, blog }) => {
   const commentCount = comments ? comments.length : 0;
   const token = Cookies.get("token");
 
+
   // Detail
   const handleDetail = () => {
     if (token) {
@@ -44,7 +45,8 @@ const Card = ({ refresh, setRefresh, blog }) => {
   };
 
   // if login userId and likeUserId same like btn will change
-  const match = like?.find((el) => el?.id === userInfo?._id);
+  const match = like?.find((el) => el === userInfo?._id);
+
   // Like function
   const handleLike = async () => {
     if (token) {
@@ -83,13 +85,12 @@ const Card = ({ refresh, setRefresh, blog }) => {
             <p className="text-sm text-lightGray">{moment(date).fromNow()}</p>
           </div>
         </div>
-
-        <div className="flex flex-col gap-2 p-2">
+        <div className="flex flex-col gap-2 p-2 mb-3">
           <h1 className="font-bold text-xl uppercase">{title}</h1>
           <HashTag hashTags={hashTag} />
           <div>{content}</div>
           <div className="w-full h-full overflow-hidden">
-            <img src={blogImg} alt="" />
+            <img src={blogImg} alt="" className="w-full h-full object-cover"/>
           </div>
         </div>
 
@@ -105,36 +106,7 @@ const Card = ({ refresh, setRefresh, blog }) => {
       </div>
       <div className="self-center w-full h-[1px] bg-gradient-to-r from-transparent via-lightWhite to-transparent"></div>
     </div>
-    // <div
-    //   onClick={handleDetail}
-    //   className="col-span-12 md:col-span-6 lg:col-span-3 border border-lightWhite rounded-md p-5 shadow"
-    // >
-    //   <div className="flex flex-col space-y-5">
-    //     <div className="flex flex-col space-y-2 text-primary">
-    //       <p className="text-sm">{moment(date).fromNow()}</p>
-    //       <h1 className="font-bold text-3xl uppercase">{title}</h1>
-    //       <p>{content}</p>
-    //       <HashTag hashTags={hashTag} />
-    //     </div>
-    //     <div className="w-full h-[350px] rounded-md overflow-hidden">
-    //       <img src={blogImg} alt="" />
-    //     </div>
-    //     <div className="flex justify-between items-center">
-    //       <div
-    //         onClick={(e) => {
-    //           e.stopPropagation();
-    //           nav(`profile/${blogOwner}`);
-    //         }}
-    //       >
-    //         <Avatar name={author_name} />
-    //       </div>
-    //       <div className="flex gap-x-5">
-    //         <LikeBtn handleLike={handleLike} match={match} likeCount={likeCount}/>
-    //         <CommentBtn commentCount={commentCount} />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
+
   );
 };
 

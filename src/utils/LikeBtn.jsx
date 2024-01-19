@@ -8,7 +8,7 @@ const LikeBtn = ({ handleLike, match, likeCount }) => {
         handleLike();
       }}
       className={`flex items-center space-x-2 ${
-        match ? "bg-primary" : "text-lightGray"
+        match ? "text-primary" : "text-lightGray"
       }`}
     >
       <SlLike className="text-xl" />

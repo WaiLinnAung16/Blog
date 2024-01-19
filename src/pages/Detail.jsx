@@ -32,19 +32,21 @@ const Detail = () => {
       <div>
         <img src={blog?.blogImg} alt="" />
       </div>
-      <div className="flex flex-col space-y-2 text-primary">
+      <div className="flex flex-col space-y-2 text-primary mb-5">
         <p className="text-sm">{moment(blog?.date).fromNow()}</p>
         <h1 className="font-bold text-3xl uppercase">{blog?.title}</h1>
         <HashTag hashTags={blog?.hashTag} />
         <p className="text-lg">{blog?.content}</p>
       </div>
 
-      <CommentForm
-        comments={blog?.comments}
-        blogId={blog?._id}
-        refresh={refresh}
-        setRefresh={setRefresh}
-      />
+      <div className="relative">
+        <CommentForm
+          comments={blog?.comments}
+          blogId={blog?._id}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
+      </div>
     </div>
   );
 };
