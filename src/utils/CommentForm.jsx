@@ -11,6 +11,7 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
   const [users, setUsers] = useState();
   const token = Cookies.get("token");
 
+  // Post comment route need blogId and User Comment
   const postComment = async () => {
     if (comment === "") {
       toast.error("Comment is not be empty!");
@@ -36,6 +37,7 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
     }
   };
 
+  // Get comments in selected Blog
   const commentUser = async () => {
     await axios
       .get(getUsersRoute, { headers: { Authorization: `Bearer ${token}` } })
@@ -46,6 +48,7 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
       .catch((err) => console.log(err));
   };
 
+  // Show Commented User
   const cmtUserName = (cmt) => {
     const user = users?.find((el) => el._id === cmt.userId)
     return user?.name;
@@ -56,7 +59,7 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
   }, []);
 
   return (
-    <div className="">
+    <div >
       <div className="flex flex-col gap-y-3 mb-5">
         {comments?.map((cmt, i) => {
           return (

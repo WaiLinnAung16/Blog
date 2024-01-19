@@ -22,22 +22,12 @@ const Home = () => {
   }, [refresh]);
 
   return (
-    <div className="grid grid-cols-12 gap-5">
+    <div className="grid grid-cols-12 gap-8">
       {blogs?.map((blog) => {
         return (
           <Card
             key={blog._id}
             blog={blog}
-            blogId={blog._id}
-            name={blog.author_name}
-            blogOwner={blog.blogOwner}
-            title={blog.title}
-            image={blog.blogImg}
-            desc={blog.content}
-            time={blog.date}
-            hashTags={blog.hashTag}
-            like={blog.like}
-            comment={blog.comments}
             setRefresh={setRefresh}
             refresh={refresh}
           />

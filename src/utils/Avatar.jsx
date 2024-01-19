@@ -5,7 +5,8 @@ import { adventurer } from "@dicebear/collection";
 
 const Avatar = ({ name }) => {
   const user = userStore(store=>store.userInfo);
-  const seed = name || user.name
+  const seed = name || user.name;
+  
   // Generate Random Avatar base on Username
   const avatar = createAvatar(adventurer, {
     seed: seed
@@ -25,9 +26,9 @@ const Avatar = ({ name }) => {
         />
       </div>
       {/* Username */}
-      {name === undefined ? null : (
+      {/* {name === undefined ? null : (
         <p className="text-primary font-semibold">{name}</p>
-      )}
+      )} */}
     </div>
   );
 };

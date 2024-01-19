@@ -63,8 +63,6 @@ const CreateBlog = () => {
 
       reader.readAsDataURL(file);
     }
-    // const data = new FormData();
-    // data.append('file',file);
 
     setFormData({
       ...formData,
@@ -75,17 +73,13 @@ const CreateBlog = () => {
   // Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
-
     const data = new FormData();
 
     // Append all other form data fields
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "hashTag") {
         // Convert hashTag array to a comma-separated string
-        console.log(value);
         const conString = value.join(",");
-        console.log(conString);
         data.append(key, conString);
       } else {
         data.append(key, value);
@@ -109,7 +103,6 @@ const CreateBlog = () => {
       console.log(error);
     }
   };
-
 
   return (
     <div>
