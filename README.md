@@ -1,3 +1,3 @@
-# React Tailwindcss JS Setup
+# Blog
 
-This is the already configuration for react with tailwindcss react-router react-icons.
+Under development
