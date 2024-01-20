@@ -21,7 +21,7 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-5">
           {user && token ? (
-            <Avatar />
+            <Avatar name={user.name} id={user._id} />
           ) : (
             <>
               <Link to={"/login"} className="flex items-center gap-x-2">

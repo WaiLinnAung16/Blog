@@ -79,7 +79,7 @@ const Card = ({ refresh, setRefresh, blog }) => {
     >
       <div className="flex flex-col gap-3 relative">
         <div className="flex items-start gap-2">
-          <Avatar name={author_name} />
+          <Avatar name={author_name} id={blogOwner} />
           <div className="space-y-1">
             <span>{author_name}</span>
             <p className="text-sm text-lightGray">{moment(date).fromNow()}</p>

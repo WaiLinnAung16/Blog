@@ -29,7 +29,6 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
           }
         )
         .then((res) => {
-          console.log(comments);
           setRefresh(!refresh);
           setComment("");
         })
@@ -42,7 +41,6 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
     await axios
       .get(getUsersRoute, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
-        console.log(res?.data?.data);
         setUsers(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -54,7 +52,6 @@ const CommentForm = ({ comments, blogId, refresh, setRefresh }) => {
     return user?.name;
   };
 
-  console.log(comments)
 
   useEffect(() => {
     commentUser();

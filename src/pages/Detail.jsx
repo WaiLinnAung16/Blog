@@ -17,7 +17,6 @@ const Detail = () => {
     await axios
       .post(getSingleBlogRoute, { _id })
       .then((res) => {
-        console.log(res?.data);
         setBlog(res?.data?.data[0]);
       })
       .catch((err) => console.log(err));
