@@ -3,21 +3,33 @@ import { useParams } from "react-router-dom";
 import { userStore } from "../Global/API/store";
 import Card from "../utils/Card";
 import Avatar from "../utils/Avatar";
+import { getUserDetailRoute, getUsersRoute } from "../Global/API/apiRoute";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Profile = () => {
   const { id } = useParams();
   const fetchProfile = userStore((store) => store.fetchProfile);
   const profile = userStore((store) => store.profile);
-
+  const token = Cookies.get("token");
   const [refresh, setRefresh] = useState(false);
+  const allUsers = async () => {
+    await axios
+      .get(getUsersRoute, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        console.log(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     fetchProfile(id);
-    // console.log(profile)
+    allUsers();
   }, [id]);
+
   return (
     <div className="flex flex-col items-start gap-5 px-3">
       <div className="space-y-3">
-        <Avatar name={profile.name} size={20} />
+        <Avatar name={profile?.email} size={"lg"} />
         <div className="space-y-2">
           <div>
             <h1 className="font-bold text-2xl">{profile.name}</h1>
@@ -29,24 +41,26 @@ const Profile = () => {
 
       <div className="grid grid-cols-3 border-b pb-3 w-full">
         <div>
-          <h1 className="font-bold text-2xl">10</h1>
+          <h1 className="font-bold text-2xl">
+            {profile?.followers ? profile?.followers?.length : 0}
+          </h1>
           <span className="font-semibold">Followers</span>
         </div>
         <div>
-          <h1 className="font-bold text-2xl">20</h1>
+          <h1 className="font-bold text-2xl">{profile?.blogs?.length}</h1>
           <span className="font-semibold">Blogs</span>
         </div>
         <div>
-          <h1 className="font-bold text-2xl">2</h1>
-          <span className="font-semibold">Favourite</span>
+          <h1 className="font-bold text-2xl">{profile?.following?.length}</h1>
+          <span className="font-semibold">Following</span>
         </div>
       </div>
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold">Friends</h1>
         <div className="flex gap-3">
-        <div className="w-12 h-12 rounded-full bg-slate-400"></div>
-        <div className="w-12 h-12 rounded-full bg-slate-400"></div>
-        <div className="w-12 h-12 rounded-full bg-slate-400"></div>
+          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
+          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
+          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
         </div>
       </div>
     </div>

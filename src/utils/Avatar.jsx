@@ -4,10 +4,10 @@ import { userStore } from "../Global/API/store";
 import { adventurer } from "@dicebear/collection";
 import { useNavigate } from "react-router-dom";
 
-const Avatar = ({ name, id, size = 12 }) => {
+const Avatar = ({ name, id, size }) => {
   const user = userStore((store) => store.userInfo);
   const nav = useNavigate();
-  const seed = name || user.name;
+  const seed = name || user.email;
 
   // Generate Random Avatar base on Username
   const avatar = createAvatar(adventurer, {
@@ -24,7 +24,9 @@ const Avatar = ({ name, id, size = 12 }) => {
       className="flex items-center space-x-2 cursor-pointer"
     >
       <div
-        className={`w-${size} h-${size} rounded-full overflow-hidden shadow-sm`}
+        className={`${
+          size === "lg" ? "w-20 h-20" : "w-12 h-12"
+        } rounded-full overflow-hidden shadow-sm`}
       >
         {/* Generated Svg */}
         <svg

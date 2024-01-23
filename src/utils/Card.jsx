@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { likeBlogRoute } from "../Global/API/apiRoute";
+import { followUserRoute, likeBlogRoute } from "../Global/API/apiRoute";
 import { userStore } from "../Global/API/store";
 
 const Card = ({ refresh, setRefresh, blog }) => {
@@ -32,7 +32,6 @@ const Card = ({ refresh, setRefresh, blog }) => {
   const likeCount = like ? like.length : 0;
   const commentCount = comments ? comments.length : 0;
   const token = Cookies.get("token");
-
 
   // Detail
   const handleDetail = () => {
@@ -73,25 +72,76 @@ const Card = ({ refresh, setRefresh, blog }) => {
     setTimeout(() => nav("/login"), 3000);
   };
 
+  // Follow user --> need blog user id, token
+  const handelFollow = async (e) => {
+    e.stopPropagation();
+    if (token) {
+      await axios
+        .post(
+          followUserRoute,
+          { userId: blogOwner },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setRefresh(!refresh);
+        })
+        .catch((err) => console.log(err));
+      return;
+    }
+    toast.error("You need to login!", { autoClose: 2000 });
+    setTimeout(() => nav("/login"), 3000);
+  };
+
   return (
     <div
       onClick={handleDetail}
       className="col-span-12  md:col-span-6 lg:col-span-12"
     >
       <div className="flex flex-col gap-3 relative shadow rounded-md p-2 md:p-4">
-        <div className="flex items-start gap-2">
-          <Avatar name={author_name} id={blogOwner} />
-          <Link to={`/profile/${blogOwner}`} className="space-y-1">
-            <span className="cursor-pointer hover:underline">{author_name}</span>
-            <p className="text-sm text-lightGray">{moment(date).fromNow()}</p>
-          </Link>
+        <div className="flex justify-between items-center gap-2">
+          {/* User info and when u click direct to user profile */}
+          <div className="flex space-x-3">
+            <Avatar name={author_name} id={blogOwner} />
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                nav(`/profile/${blogOwner}`);
+              }}
+              className="space-y-1"
+            >
+              <span className="cursor-pointer hover:underline">
+                {author_name}
+              </span>
+              <p className="text-sm text-lightGray">{moment(date).fromNow()}</p>
+            </div>
+          </div>
+
+          {/* If userId and blog userId is same, can't follow yourself and not same it's ok */}
+          {userInfo?._id === blogOwner ? null : (
+            <div
+              onClick={handelFollow}
+              className="py-1 px-4 bg-lightWhite rounded"
+            >
+              <span>
+                {userInfo?.following?.includes(blogOwner)
+                  ? "Following"
+                  : "Follow +"}
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2 p-2 mb-3">
           <h1 className="font-bold text-xl uppercase">{title}</h1>
           <HashTag hashTags={hashTag} />
           <div>{content}</div>
           <div className="w-full h-full overflow-hidden">
-            <img src={blogImg} alt="" className="w-full h-full object-cover"/>
+            <img src={blogImg} alt="" className="w-full h-full object-cover" />
           </div>
         </div>
 
@@ -107,7 +157,6 @@ const Card = ({ refresh, setRefresh, blog }) => {
       </div>
       {/* <div className="self-center w-full h-[1px] bg-gradient-to-r from-transparent via-lightGray to-transparent"></div> */}
     </div>
-
   );
 };
 

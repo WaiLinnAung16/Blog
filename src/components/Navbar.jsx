@@ -10,7 +10,7 @@ import { userStore } from "../Global/API/store";
 
 const Navbar = () => {
   const user = userStore((store) => store.userInfo);
-  console.log(user)
+  // console.log(user)
   const token = Cookies.get("token");
   return (
     <nav className=" text-primary px-2 py-3 fixed w-full z-50">
