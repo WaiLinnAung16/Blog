@@ -12,15 +12,24 @@ const Profile = () => {
   const fetchProfile = userStore((store) => store.fetchProfile);
   const profile = userStore((store) => store.profile);
   const token = Cookies.get("token");
-  const [refresh, setRefresh] = useState(false);
+  const [users, setUsers] = useState([]);
+
   const allUsers = async () => {
     await axios
       .get(getUsersRoute, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
-        console.log(res?.data?.data);
+        // console.log(res?.data?.data);
+        setUsers(res?.data?.data);
       })
       .catch((err) => console.log(err));
   };
+
+  const showFollowers = () => {
+    return users?.filter((user) =>
+      profile?.followers?.find((el) => user._id === el)
+    );
+  };
+
   useEffect(() => {
     fetchProfile(id);
     allUsers();
@@ -41,14 +50,14 @@ const Profile = () => {
 
       <div className="grid grid-cols-3 border-b pb-3 w-full">
         <div>
+          <h1 className="font-bold text-2xl">{profile?.blogs?.length}</h1>
+          <span className="font-semibold">Blogs</span>
+        </div>
+        <div>
           <h1 className="font-bold text-2xl">
             {profile?.followers ? profile?.followers?.length : 0}
           </h1>
           <span className="font-semibold">Followers</span>
-        </div>
-        <div>
-          <h1 className="font-bold text-2xl">{profile?.blogs?.length}</h1>
-          <span className="font-semibold">Blogs</span>
         </div>
         <div>
           <h1 className="font-bold text-2xl">{profile?.following?.length}</h1>
@@ -58,9 +67,12 @@ const Profile = () => {
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold">Friends</h1>
         <div className="flex gap-3">
-          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
-          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
-          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
+          {showFollowers().map((follower) => (
+            <div className="flex flex-col gap-1">
+              <Avatar name={follower?.email} id={follower?._id} />
+              <span className="text-sm">{follower?.name}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiFillHome } from "react-icons/ai";
-import { TbSquareRoundedPlus } from "react-icons/tb";
-import { BsPeopleFill } from "react-icons/bs";
 import { BiLogIn } from "react-icons/bi";
 import Avatar from "../utils/Avatar";
 import Cookies from "js-cookie";
@@ -22,7 +19,7 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-5">
           {user && token ? (
-            <Avatar name={user.email} id={user._id} />
+            <Avatar id={user._id} />
           ) : (
             <>
               <Link to={"/login"} className="flex items-center gap-x-2">
