@@ -22,7 +22,7 @@ const Home = () => {
   }, [refresh]);
 
   return (
-    <div className="grid grid-cols-12 space-y-10 mb-20">
+    <div className="grid grid-cols-12 space-y-10 mb-20 w-full max-w-[400px] mx-auto">
       {blogs?.map((blog) => {
         return (
           <Card

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { registerRoute } from "../Global/API/apiRoute";
+import { getAllBlogRoute, getUsersRoute, registerRoute } from "../Global/API/apiRoute";
 import registerValidate from "../utils/Validation/registerValidate";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const nav = useNavigate();
   const initialState = {
     name: "",
     email: "",
@@ -13,7 +14,16 @@ const Register = () => {
     confirmPassword: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [existedUser, setExistedUser] = useState([]);
   const [errors, setErrors] = useState();
+
+  // fetch all users already existed
+  const fetchUsers = async () => {
+    await axios
+      .get(getAllBlogRoute)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   // Save values change in every input
   const handleChangeInput = (e) => {
@@ -41,10 +51,19 @@ const Register = () => {
     if (valid) {
       await axios
         .post(registerRoute, apiData)
-        .then((res) => console.log(res?.data?.data))
+        .then((res) => {
+          console.log(res);
+          res.status === 201 && nav("/login");
+          toast.success("Successfully register your account.");
+        })
         .catch((err) => toast.error(err?.response?.data?.message));
     }
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div className="flex items-center justify-center h-[100vh]">
       <div className="min-w-lg w-[500px] border border-lightWhite rounded p-5">
@@ -115,7 +134,10 @@ const Register = () => {
             {/* to register */}
             <p>
               Already have an account?{" "}
-              <Link to={'/login'} className="cursor-pointer font-light underline text-darkGray hover:font-semibold">
+              <Link
+                to={"/login"}
+                className="cursor-pointer font-light underline text-darkGray hover:font-semibold"
+              >
                 Login
               </Link>
             </p>

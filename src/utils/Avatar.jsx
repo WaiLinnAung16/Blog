@@ -21,7 +21,7 @@ const Avatar = ({ name, id, size = 12 }) => {
         e.stopPropagation();
         nav(`/profile/${id}`);
       }}
-      className="flex items-center space-x-2"
+      className="flex items-center space-x-2 cursor-pointer"
     >
       <div
         className={`w-${size} h-${size} rounded-full overflow-hidden shadow-sm`}

@@ -10,9 +10,10 @@ import { userStore } from "../Global/API/store";
 
 const Navbar = () => {
   const user = userStore((store) => store.userInfo);
+  console.log(user)
   const token = Cookies.get("token");
   return (
-    <nav className=" text-primary px-2 py-3">
+    <nav className=" text-primary px-2 py-3 fixed w-full z-50">
       <div className="flex justify-between items-center">
         {/* LOGO HERE */}
         <Link to={"/"} className="font-bold text-3xl">
@@ -21,7 +22,7 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-5">
           {user && token ? (
-            <Avatar name={user.name} id={user._id} />
+            <Avatar name={user.email} id={user._id} />
           ) : (
             <>
               <Link to={"/login"} className="flex items-center gap-x-2">

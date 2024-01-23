@@ -5,7 +5,7 @@ import LikeBtn from "./LikeBtn";
 import CommentBtn from "./CommentBtn";
 import moment from "moment";
 import { SlLike } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -25,6 +25,7 @@ const Card = ({ refresh, setRefresh, blog }) => {
     like,
     comments,
   } = blog;
+
   const userInfo = userStore((store) => store.userInfo);
   const addBlog = userStore((store) => store.addBlog);
   const nav = useNavigate();
@@ -75,15 +76,15 @@ const Card = ({ refresh, setRefresh, blog }) => {
   return (
     <div
       onClick={handleDetail}
-      className="col-span-12  md:col-span-6 lg:col-span-3"
+      className="col-span-12  md:col-span-6 lg:col-span-12"
     >
-      <div className="flex flex-col gap-3 relative">
+      <div className="flex flex-col gap-3 relative shadow rounded-md p-2 md:p-4">
         <div className="flex items-start gap-2">
           <Avatar name={author_name} id={blogOwner} />
-          <div className="space-y-1">
-            <span>{author_name}</span>
+          <Link to={`/profile/${blogOwner}`} className="space-y-1">
+            <span className="cursor-pointer hover:underline">{author_name}</span>
             <p className="text-sm text-lightGray">{moment(date).fromNow()}</p>
-          </div>
+          </Link>
         </div>
         <div className="flex flex-col gap-2 p-2 mb-3">
           <h1 className="font-bold text-xl uppercase">{title}</h1>
@@ -104,7 +105,7 @@ const Card = ({ refresh, setRefresh, blog }) => {
           <CommentBtn commentCount={commentCount} />
         </div>
       </div>
-      <div className="self-center w-full h-[1px] bg-gradient-to-r from-transparent via-lightWhite to-transparent"></div>
+      {/* <div className="self-center w-full h-[1px] bg-gradient-to-r from-transparent via-lightGray to-transparent"></div> */}
     </div>
 
   );

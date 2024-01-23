@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="">
       <Navbar />
-      <div className="px-2 py-5">
+      <div className="px-2 pb-5 pt-20">
         <Path />
       </div>
 
